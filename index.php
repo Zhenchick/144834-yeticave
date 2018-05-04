@@ -30,12 +30,12 @@ $user_avatar = 'img/user.jpg';
 
         <!-- здесь должен быть PHP код для показа аватара пользователя -->
 
-            <?php if ($is_auth == true): ?>
+            <?php if ($is_auth === true): ?>
                 <div class="user-menu__image">
-                        <img src=" <?php echo "$user_avatar"; ?>" width="40" height="40" alt="Пользователь">
+                        <img src="<?= $user_avatar ?>" width="40" height="40" alt="Пользователь">
                 </div>
                 <div class="user-menu__logged">
-                    <p><?php echo "$user_name"; ?></p>
+                    <p><?= $user_name ?></p>
                 </div>
              <?php else: ?>
                 <ul class="user-menu__list">
