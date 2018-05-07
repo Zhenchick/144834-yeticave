@@ -4,12 +4,30 @@ $is_auth = (bool) rand(0, 1);
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 $categories = [
-    "Доски и лыжи",
-    "Крепления",
-    "Ботинки",
-    "Одежда",
-    "Инструменты",
-    "Разное"
+    'category_1' => [
+            'title' => 'Доски и лыжи',
+            'code' => 'boards'
+    ],
+    'category_2' => [
+            'title' => 'Крепления',
+            'code' => 'attachment'
+    ],
+    'category_3' => [
+            'title' => 'Ботинки',
+            'code' => 'boots'
+    ],
+    'category_4' => [
+            'title' => 'Одежда',
+            'code' => 'clothing'
+    ],
+    'category_5' => [
+            'title' => 'Инструменты',
+            'code' => 'tools'
+    ],
+    'category_6' => [
+            'title' => 'Разное',
+            'code' => 'other'
+    ]
 ];
 
 $lots_list = [
@@ -109,24 +127,16 @@ $lots_list = [
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="all-lots.html">Доски и лыжи</a>
-            </li>
-            <li class="promo__item promo__item--attachment">
-                <a class="promo__link" href="all-lots.html">Крепления</a>
-            </li>
-            <li class="promo__item promo__item--boots">
-                <a class="promo__link" href="all-lots.html">Ботинки</a>
-            </li>
-            <li class="promo__item promo__item--clothing">
-                <a class="promo__link" href="all-lots.html">Одежда</a>
-            </li>
-            <li class="promo__item promo__item--tools">
-                <a class="promo__link" href="all-lots.html">Инструменты</a>
-            </li>
-            <li class="promo__item promo__item--other">
-                <a class="promo__link" href="all-lots.html">Разное</a>
-            </li>
+
+            <?php foreach ($categories as $i => $category):  ?>
+
+                   <li class="promo__item promo__item--<?=$category['code']; ?>">
+                    <a class="promo__link" href="all-lots.html">
+                        <?=$category['title']; ?>
+                    </a>
+                   </li>
+
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -166,7 +176,7 @@ $lots_list = [
 
                 <?php foreach ($categories as $i => $category):  ?>
 
-                    <li class="nav__item"><a href="../pages/all-lots.html"><?=$val['category']; ?></a></li>
+                    <li class="nav__item"><a href="../pages/all-lots.html"><?=$category['title']; ?></a></li>
 
                 <?php endforeach; ?>
         </ul>
