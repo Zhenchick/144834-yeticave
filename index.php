@@ -3,6 +3,8 @@ $is_auth = (bool) rand(0, 1);
 
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
+
+// Массив категорий
 $categories = [
     'category_1' => [
             'title' => 'Доски и лыжи',
@@ -29,7 +31,7 @@ $categories = [
             'code' => 'other'
     ]
 ];
-
+// Массив лотов
 $lots_list = [
     'lot_1' => [
         'name' => '2014 Rossignol District Snowboard',
@@ -73,7 +75,27 @@ $lots_list = [
         'img' => 'img/lot-6.jpg'
 
     ]
+
 ];
+
+// Функция для форматирования цены и добавления к ней знака рубля
+
+function formatPrice ($price, $num) {
+
+    $rounded_num = ceil($price);
+
+        if ($rounded_num < $num) {
+            $price = $rounded_num;
+            $price.=' '.'<b class="rub">р</b>';
+        } else {
+            $price = number_format($rounded_num, 0, '.', ' ');
+            $price.=' '.'<b class="rub">р</b>';
+        }
+        
+            return $price;
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -128,6 +150,25 @@ $lots_list = [
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
 
+            <li class="promo__item promo__item--boards">
+                <a class="promo__link" href="all-lots.html">Доски и лыжи</a>
+            </li>
+            <li class="promo__item promo__item--attachment">
+                <a class="promo__link" href="all-lots.html">Крепления</a>
+            </li>
+            <li class="promo__item promo__item--boots">
+                <a class="promo__link" href="all-lots.html">Ботинки</a>
+            </li>
+            <li class="promo__item promo__item--clothing">
+                <a class="promo__link" href="all-lots.html">Одежда</a>
+            </li>
+            <li class="promo__item promo__item--tools">
+                <a class="promo__link" href="all-lots.html">Инструменты</a>
+            </li>
+            <li class="promo__item promo__item--other">
+                <a class="promo__link" href="all-lots.html">Разное</a>
+            </li>
+             <!-- Выводит верхнее меню -->
             <?php foreach ($categories as $i => $category):  ?>
 
                    <li class="promo__item promo__item--<?=$category['code']; ?>">
@@ -145,19 +186,25 @@ $lots_list = [
         </div>
         <ul class="lots__list">
 
+            <!-- Выводит лоты аукциона -->
             <?php foreach ($lots_list as $key => $val):  ?>
 
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$val['img']; ?>" width="350" height="260" alt="Сноуборд">
+                    <img src="img/lot-1.jpg" width="350" height="260" alt="Сноуборд">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$val['category']; ?></span>
-                    <h3 class="lot__title"><a class="text-link" href="lot.html"><?=$val['name']; ?></a></h3>
+                    <span class="lot__category">Доски и лыжи</span>
+                    <h3 class="lot__title"><a class="text-link" href="lot.html">2014 Rossignol District Snowboard</a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$val['price']; ?><b class="rub">р</b></span>
+
+                            <span class="lot__cost">10 999<b class="rub">р</b></span>
+                            <span class="lot__cost">
+                                <!-- Форматирует начальную цену, добавляет знак рубля -->
+                                <?=formatPrice($val['price'], 1000); ?>
+                            </span>
                         </div>
                         <div class="lot__timer timer">
 
@@ -165,7 +212,6 @@ $lots_list = [
                     </div>
                 </div>
             </li>
-        <?php endforeach; ?>
         </ul>
     </section>
 </main>
@@ -173,7 +219,26 @@ $lots_list = [
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
+            <li class="nav__item">
+                <a href="all-lots.html">Доски и лыжи</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Крепления</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Ботинки</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Одежда</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Инструменты</a>
+            </li>
+            <li class="nav__item">
+                <a href="all-lots.html">Разное</a>
+            </li>
 
+                <!-- Выводит меню футера -->
                 <?php foreach ($categories as $i => $category):  ?>
 
                     <li class="nav__item"><a href="../pages/all-lots.html"><?=$category['title']; ?></a></li>
