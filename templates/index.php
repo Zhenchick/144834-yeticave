@@ -36,7 +36,7 @@
                               </span>
                             </div>
                         <div class="lot__timer timer">
-
+                            <?=$time_to_tomorrow; ?>
                         </div>
                       </div>
                     </div>
