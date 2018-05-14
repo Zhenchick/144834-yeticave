@@ -4,12 +4,11 @@
         <ul class="promo__list">
              <!-- Выводит верхнее меню -->
             <?php foreach ($categories as $category):  ?>
-                   <li class="promo__item promo__item--<?=$category['code']; ?>">
+                <li class="promo__item promo__item--<?=$category['code']; ?>">
                     <a class="promo__link" href="all-lots.html">
                         <?=$category['title']; ?>
                     </a>
-                   </li>
-
+                </li>
             <?php endforeach; ?>
         </ul>
     </section>
@@ -31,13 +30,11 @@
                             <div class="lot__rate">
                               <span class="lot__amount">Стартовая цена</span>
                               <span class="lot__cost">
-                                <!-- Форматирует начальную цену, добавляет знак рубля -->
                                 <?=formatPrice($lot['price']) ?>
                               </span>
                             </div>
                         <div class="lot__timer timer">
-                            <!-- Функция считает сколько времени до конца суток-->
-                            <?=timeCalculation($tomorrow) ?>
+                            <?=timeDiff() ?>
                         </div>
                       </div>
                     </div>

@@ -1,34 +1,51 @@
 <?php
-// Функция форматирует цену и добавляет знак рубля
-function formatPrice($price)
+ 
+/**
+ * Функция форматирует цену и добавляет знак рубля
+ * @param float $price 
+ * @return string
+ */
+function formatPrice(float $price): string
 {
     return number_format($price, 0, '.', ' ') . ' ' . '<b class="rub">р</b>';
 }
-// Функция считает сколько времени до конца суток
-function timeCalculation($tomorrow)
-{
-	$now = time();
-	$tomorrow = strtotime('tomorrow midnight');
-	if ($tomorrow < $now)
-	{
-		return '00:00';
-	}
-	return gmdate("H:i", $tomorrow - $now);
 
+// Функция считает сколько времени до конца суток
+function timeDiff(
+	string $start_date = null, 
+	string $end_date = null
+): string
+{
+	$time_diff = '00:00';
+
+	if (is_null($start_date)) {
+		$start_date = date('Y-m-d H:i:s');
+	}
+
+	if (is_null($end_date)) {
+		$end_date = date('Y-m-d H:i:s', strtotime('tomorrow midnight'));
+	}
+
+	$end_date_timestamp = strtotime($end_date);
+	$start_date_timestamp = strtotime($start_date);
+
+	if ($end_date_timestamp >= $start_date_timestamp) {
+		$time_diff = gmdate("H:i", $end_date_timestamp - $start_date_timestamp);
+	} 
+
+	return $time_diff;
 }
+
 // Функция-шаблонизатор
 function renderTemplate($path, $data = []) 
 {
-	if (!file_exists($path)) 
-	{
+	if (!file_exists($path)) {
 	    return '';
 	}
+	
 	extract($data);
 	ob_start();
-	include($path);
+	include $path;
 	$html = ob_get_clean();
 	return $html;
 }
-
-
-
