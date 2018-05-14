@@ -36,7 +36,8 @@
                               </span>
                             </div>
                         <div class="lot__timer timer">
-                            <?=$time_to_tomorrow; ?>
+                            <!-- Функция считает сколько времени до конца суток-->
+                            <?=timeCalculation($tomorrow) ?>
                         </div>
                       </div>
                     </div>

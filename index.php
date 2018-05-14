@@ -9,8 +9,7 @@ $page_content = renderTemplate('templates/index.php', [
     'categories' => $categories,
     'lots_list' => $lots_list,
     'now' => $now,
-    'tomorrow' => $tomorrow,
-    'time_to_tomorrow' => $time_to_tomorrow
+    'tomorrow' => $tomorrow
 ]);
 
 //Окончательный HTML код 
@@ -23,7 +22,7 @@ $layout_content = renderTemplate('templates/layout.php',[
     'is_auth' => $is_auth
     ]
 );
-
+//Выводит главную страницу
 print($layout_content);
 ?>
 

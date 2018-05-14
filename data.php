@@ -1,8 +1,5 @@
 <?php
 date_default_timezone_set('Europe/Moscow');
-$now = time();
-$tomorrow = strtotime('tomorrow midnight');
-$time_to_tomorrow = gmdate("H:i", $tomorrow - $now);
 $is_auth = (bool) rand(0, 1);
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
