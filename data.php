@@ -1,8 +1,9 @@
 <?php
+date_default_timezone_set('Europe/Moscow');
 $is_auth = (bool) rand(0, 1);
-
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
+
 
 // Массив категорий
 $categories = [
