@@ -10,7 +10,12 @@ function formatPrice(float $price): string
     return number_format($price, 0, '.', ' ') . ' ' . '<b class="rub">р</b>';
 }
 
-// Функция считает сколько времени до конца суток
+/**
+ * Функция считает разницу между двумя датами
+ * @param string $start_date
+ * @param string $end_date
+ * @return string
+ */
 function timeDiff(
 	string $start_date = null, 
 	string $end_date = null
@@ -36,7 +41,12 @@ function timeDiff(
 	return $time_diff;
 }
 
-// Функция-шаблонизатор
+/**
+ * Функция считает разницу между двумя датами
+ * @param string $path
+ * @param array $data
+ * @return string
+ */
 function renderTemplate($path, $data = []) 
 {
 	if (!file_exists($path)) {
@@ -44,8 +54,12 @@ function renderTemplate($path, $data = [])
 	}
 	
 	extract($data);
+
 	ob_start();
+
 	include $path;
+
 	$html = ob_get_clean();
+	
 	return $html;
 }
