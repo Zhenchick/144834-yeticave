@@ -32,13 +32,13 @@ VALUES
 SELECT * FROM `category`;
 
 /*Получить самые новые открытые лоты*/
-SELECT * FROM `lots` ORDER BY `date_of_create` ASC;
+SELECT * FROM `lots` WHERE NOW() < `date_of_end` ORDER BY `date_of_create` ASC;
 
 /*Показать лот по его id*/
 SELECT * FROM `lots` WHERE `id` = 3;
 
 /*Название категории к которой принадлежит лот*/
-SELECT `category_id` FROM `lots` WHERE `id` = 3;
+SELECT `category`.`title` FROM `category` JOIN `lots` ON `category`.`id` = `lots`.`category_id`  WHERE `lots`.`id` = 6;
 
 /*Обновить название лота по id*/
 UPDATE `lots` SET `name` = 'new name' WHERE `id` = 1;
