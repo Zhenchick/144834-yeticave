@@ -1,39 +1,25 @@
 <?php
+// Подключение к базе данных
+$connect = mysqli_connect('localhost', 'root', '', 'yeticave-144834');
+// Формируем SQL запрос на вывод названия категорий
+$categories_sql_query = 'SELECT `title` FROM `category`';
+$result_categories_sql_query = mysqli_query($connect, $categories_sql_query);
+// Массив категорий
+$categories = mysqli_fetch_all($result_categories_sql_query, MYSQLI_ASSOC);
+
+// Формируем SQL запрос на вывод данных лотов
+$lots_list_sql_query = 'SELECT `name`, `start_price`, `img`, `category`.`title` FROM `category` JOIN `lots` ON `category`.`id` = `lots`.`category_id`';
+$result_lots_list_sql_query = mysqli_query($connect, $lots_list_sql_query);
+// Массив лотов
+$lots_list = mysqli_fetch_all($result_lots_list_sql_query, MYSQLI_ASSOC);
+
 date_default_timezone_set('Europe/Moscow');
 $is_auth = (bool) rand(0, 1);
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 
-
-// Массив категорий
-$categories = [
-    'category_1' => [
-            'title' => 'Доски и лыжи',
-            'code' => 'boards'
-    ],
-    'category_2' => [
-            'title' => 'Крепления',
-            'code' => 'attachment'
-    ],
-    'category_3' => [
-            'title' => 'Ботинки',
-            'code' => 'boots'
-    ],
-    'category_4' => [
-            'title' => 'Одежда',
-            'code' => 'clothing'
-    ],
-    'category_5' => [
-            'title' => 'Инструменты',
-            'code' => 'tools'
-    ],
-    'category_6' => [
-            'title' => 'Разное',
-            'code' => 'other'
-    ]
-];
 // Массив лотов
-$lots_list = [
+/*$lots_list = [
     'lot_1' => [
         'name' => '2014 Rossignol District Snowboard',
         'category' => 'Доски и лыжи',
@@ -77,7 +63,7 @@ $lots_list = [
 
     ]
 
-];
+];*/
 
 // ставки пользователей, которыми надо заполнить таблицу
 $bets = [
