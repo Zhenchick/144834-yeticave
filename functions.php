@@ -3,6 +3,7 @@
 /**
  * Функция форматирует цену и добавляет знак рубля
  * @param float $price 
+ *
  * @return string
  */
 function formatPrice(float $price): string
@@ -14,6 +15,7 @@ function formatPrice(float $price): string
  * Функция считает разницу между двумя датами
  * @param string $start_date
  * @param string $end_date
+ *
  * @return string
  */
 function timeDiff(
@@ -45,6 +47,7 @@ function timeDiff(
  * Функция считает разницу между двумя датами
  * @param string $path
  * @param array $data
+ *
  * @return string
  */
 function renderTemplate($path, $data = []) 
