@@ -46,5 +46,6 @@ CREATE TABLE `bets` (
 CREATE TABLE `category` (
 	`id` 					INT AUTO_INCREMENT,
 	`title`					CHAR(64) NOT NULL,
+	`code`					CHAR(64) NOT NULL,
 	PRIMARY KEY (`id`)
 );
