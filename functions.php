@@ -1,5 +1,6 @@
 <?php
- 
+include_once "mysql_helper.php";
+
 /**
  * Функция форматирует цену и добавляет знак рубля
  * @param float $price 
@@ -37,14 +38,19 @@ function timeDiff(
 	$start_date_timestamp = strtotime($start_date);
 
 	if ($end_date_timestamp >= $start_date_timestamp) {
-		$time_diff = gmdate("H:i", $end_date_timestamp - $start_date_timestamp);
+		//$time_diff = gmdate("m-d H:i", $end_date_timestamp - $start_date_timestamp);
+		$diff = $end_date_timestamp - $start_date_timestamp;
+		$hours = floor($diff/3600);
+		$diff -= $hours*3600;
+		$minute = floor($diff/60);
+		$time_diff = "$hours:$minute";
 	} 
 
 	return $time_diff;
 }
 
 /**
- * Функция считает разницу между двумя датами
+ * Функция-шаблонизатор
  * @param string $path
  * @param array $data
  *
@@ -65,4 +71,79 @@ function renderTemplate($path, $data = [])
 	$html = ob_get_clean();
 	
 	return $html;
+}
+
+/**
+* Функция вывода лота по его id
+* @param $connect
+* @param int $lot_id
+* 
+* @return array $lot
+*/
+function getLotById($connect, $lot_id)
+{
+	$lot_desc_by_id_sql_query = "
+    SELECT 
+        * 
+    FROM 
+        `lots`
+    WHERE
+    	`id` = $lot_id;
+    ";
+    $result_lot_desc_by_id_sql_query = mysqli_query($connect, $lot_desc_by_id_sql_query);
+    $lot = mysqli_fetch_assoc($result_lot_desc_by_id_sql_query);
+    return $lot;
+}
+
+/**
+*
+*/
+function getBetsByLotId($connect, $lot_id)
+{
+	$bets_by_id_sql_query = "
+	SELECT
+		`b`.*,
+		`u`.`name`
+	FROM
+		`bets` AS `b`
+	JOIN
+		`users` AS `u`
+	ON 
+		`u`.`id` = `b`.`user_id`
+	WHERE
+		`lot_id` = ? ORDER BY `date_of_placement` DESC;
+	";
+	$stmt = db_get_prepare_stmt($connect, $bets_by_id_sql_query, [$lot_id]);
+	mysqli_stmt_execute($stmt);
+	$res = mysqli_stmt_get_result($stmt);
+
+	return mysqli_fetch_all($res, MYSQLI_ASSOC);
+
+	//SELECT * FROM `bets` WHERE `lot_id` = 1 ORDER BY `date_of_placement` ASC; добавить им пользователя
+}
+
+/**
+*
+*/
+function getMinBet($lot, $bets = [])
+{
+	if (empty($bets)) {
+		return $lot['start_price'];
+	} else {
+		$last_bet = $bets[0];
+		return $last_bet['price'] + $lot['step_of_bet'];
+	}
+	
+	//$current_bet = $start_price + $step_of_bet;
+	//return number_format($current_bet, 0, '.', ' ');
+}
+
+function currentPrice($lot, $bets = [])
+{
+	if (empty($bets)) {
+		return $lot['start_price'];
+	} else {
+		$last_bet = $bets[0];
+		return $last_bet['price'];
+	}
 }

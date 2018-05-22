@@ -6,15 +6,39 @@ if ($connect == false) {
 } else {
     mysqli_set_charset($connect, 'utf8');
     // Формируем SQL запрос на вывод названия категорий
-    $categories_sql_query = 'SELECT `title`, `code` FROM `category`';
+    $categories_sql_query = "
+    SELECT 
+        * 
+    FROM 
+        `category`
+    ";
     $result_categories_sql_query = mysqli_query($connect, $categories_sql_query);
     // Массив категорий
     $categories = mysqli_fetch_all($result_categories_sql_query, MYSQLI_ASSOC);
     // Формируем SQL запрос на вывод данных лотов
-    $lots_list_sql_query = 'SELECT `name`, `start_price`, `img`, `category`.`title` FROM `category` JOIN `lots` ON `category`.`id` = `lots`.`category_id`';
+    $lots_list_sql_query = "
+        SELECT
+            `l`.*,
+            `c`.`title`
+        FROM
+            `lots` AS `l`
+        JOIN
+            `category` AS `c`
+            ON `c`.`id`=`l`.`category_id`
+    ";
     $result_lots_list_sql_query = mysqli_query($connect, $lots_list_sql_query);
     // Массив лотов
     $lots_list = mysqli_fetch_all($result_lots_list_sql_query, MYSQLI_ASSOC);
+    // Формируем SQL запрос на вывод данных ставок
+    $bets_sql_query = "
+    SELECT 
+        * 
+    FROM 
+        `bets`
+    ";
+    $result_bets_sql_query = mysqli_query($connect, $bets_sql_query);
+    // Массив категорий
+    $bets = mysqli_fetch_all($result_bets_sql_query, MYSQLI_ASSOC);
 }
 
 date_default_timezone_set('Europe/Moscow');
