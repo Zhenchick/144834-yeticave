@@ -14,8 +14,9 @@
               </span>
             </div>
         <div class="lot__timer timer">
-
+          <?=timeDiff(null, $lot['date_of_end'])?>
         </div>
       </div>
     </div>
  </li>
+ 
