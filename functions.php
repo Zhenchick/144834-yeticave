@@ -134,8 +134,6 @@ function getMinBet($lot, $bets = [])
 		return $last_bet['price'] + $lot['step_of_bet'];
 	}
 	
-	//$current_bet = $start_price + $step_of_bet;
-	//return number_format($current_bet, 0, '.', ' ');
 }
 
 function currentPrice($lot, $bets = [])
