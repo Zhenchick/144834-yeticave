@@ -28,15 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_FILES['img']['name'])) {
         $tmp_name = $_FILES['img']['tmp_name'];
-        $path = $_FILES['img']['name'];
+        $path = 'img/' . $_FILES['img']['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
-        if ($file_type !== "image/jpg") {
+        if (strripos($file_type, 'image') !== 0) {
             $errors['img'] = 'Загрузите картинку в формате JPG';
         } else {
-            move_uploaded_file($tmp_name, 'img/' . $path);
-            $lot['path'] = $path;
+            move_uploaded_file($tmp_name, $path);
+            $lot['img'] = $path;
         }
     } else {
         $errors['img'] = 'Вы не загрузили файл';
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 `step_of_bet`, 
                 `user_id`, 
                 `category_id`, 
-                `path`
+                `img`
             ) 
         VALUES (NOW(), ?, ?, ?, ?, ?, 1, ?, ?)
     ";
@@ -68,15 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $lot['date_of_end'], 
             $lot['step_of_bet'], 
             $lot['category_id'], 
-            $lot['path']
+            $lot['img']
         ]
     );
+    
     $result_add_lot_query = mysqli_stmt_execute($stmt); 
     if ($result_add_lot_query) {
         $lot_id = mysqli_insert_id($connect);
         header("Location: lot.php?lot_id=" . $lot_id);
-    } else {
-        $content = renderTemplate('error.php', ['error' => mysqli_error($connect)]);
     }
 }
 
