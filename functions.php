@@ -17,7 +17,7 @@ function formatPrice(float $price): string
  * @param string $start_date
  * @param string $end_date
  *
- * @return string
+ * @return string $time_diff
  */
 function timeDiff(
 	string $start_date = null, 
@@ -38,7 +38,6 @@ function timeDiff(
 	$start_date_timestamp = strtotime($start_date);
 
 	if ($end_date_timestamp >= $start_date_timestamp) {
-		//$time_diff = gmdate("m-d H:i", $end_date_timestamp - $start_date_timestamp);
 		$diff = $end_date_timestamp - $start_date_timestamp;
 		$hours = floor($diff/3600);
 		$diff -= $hours*3600;
@@ -84,11 +83,16 @@ function getLotById($connect, $lot_id)
 {
 	$lot_desc_by_id_sql_query = "
     SELECT 
-        * 
+        `l`.*,
+        `c`.`title` 
     FROM 
-        `lots`
+        `lots` AS `l`
+	JOIN
+    	`category` AS `c`
+    ON 
+    	`c`.`id` = `l`.`category_id` 
     WHERE
-    	`id` = $lot_id;
+    	`l`.`id` = $lot_id;
     ";
     $result_lot_desc_by_id_sql_query = mysqli_query($connect, $lot_desc_by_id_sql_query);
     $lot = mysqli_fetch_assoc($result_lot_desc_by_id_sql_query);
@@ -96,7 +100,11 @@ function getLotById($connect, $lot_id)
 }
 
 /**
-*
+*Функция вывода ставки по id лота
+* @param $connect
+* @param int $lot_id
+* 
+* @return array $bets
 */
 function getBetsByLotId($connect, $lot_id)
 {
@@ -123,7 +131,11 @@ function getBetsByLotId($connect, $lot_id)
 }
 
 /**
-*
+* Функция рассчёта минимальной ставки
+* @param array $lot
+* @param array $$bets
+* 
+* @return int
 */
 function getMinBet($lot, $bets = [])
 {
@@ -134,10 +146,15 @@ function getMinBet($lot, $bets = [])
 		return $last_bet['price'] + $lot['step_of_bet'];
 	}
 	
-	//$current_bet = $start_price + $step_of_bet;
-	//return number_format($current_bet, 0, '.', ' ');
 }
 
+/**
+* Функция рассчёта минимальной ставки
+* @param array $lot
+* @param array $$bets
+* 
+* @return int
+*/
 function currentPrice($lot, $bets = [])
 {
 	if (empty($bets)) {

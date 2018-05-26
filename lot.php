@@ -31,7 +31,7 @@ $layout_content = renderTemplate(
     [
         'categories' => $categories,
         'content' => $page_content,
-        'title' => 'Главная',
+        'title' => $lot['name'],
         'user_name' => $user_name,
         'user_avatar' => $user_avatar,
         'is_auth' => $is_auth
