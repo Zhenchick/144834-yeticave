@@ -1,8 +1,3 @@
-<?php 
-echo "<pre>";
-var_dump($errors);
-echo "</pre>";
-?>
 <main>
   <nav class="nav">
     <ul class="nav__list container">
@@ -56,14 +51,14 @@ echo "</pre>";
     <div class="form__container-three">
       <div class="form__item form__item--small">
         <label for="lot-rate">Начальная цена</label>
-        <input id="lot-rate" type="number" name="lot[start_price]" placeholder="0" value="<?= $lot['start_price'] ?? ''; ?>">
+        <input id="lot-rate" type="number" required name="lot[start_price]" placeholder="0" value="<?= $lot['start_price'] ?? ''; ?>">
         <?php if (isset($errors['start_price'])): ?>
         <span class="form__error"><?=$errors['start_price'] ?></span>
         <?php endif; ?>
       </div>
       <div class="form__item form__item--small">
         <label for="lot-step">Шаг ставки</label>
-        <input id="lot-step" type="number" name="lot[step_of_bet]" placeholder="0" value="<?= $lot['step_of_bet'] ?? ''; ?>">
+        <input id="lot-step" type="number" required name="lot[step_of_bet]" placeholder="0" value="<?= $lot['step_of_bet'] ?? ''; ?>">
         <?php if (isset($errors['step_of_bet'])): ?>
         <span class="form__error"><?=$errors['step_of_bet'] ?></span>
         <?php endif; ?>
