@@ -4,6 +4,13 @@ require 'functions.php';
 
 require 'data.php';
 
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    $is_auth = true;
+} else {
+    $user = [];
+    $is_auth = false;
+}
 //HTML код главной страницы
 $page_content = renderTemplate(
     'templates/index.php', 
@@ -20,8 +27,8 @@ $layout_content = renderTemplate(
         'categories' => $categories,
         'content' => $page_content,
         'title' => 'Главная',
-        'user_name' => $user_name,
-        'user_avatar' => $user_avatar,
+        'user_name' => $user['name'] ?? '',
+        'user_avatar' => $user['avatar'] ?? '',
         'is_auth' => $is_auth
     ]
 );

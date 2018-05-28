@@ -67,7 +67,7 @@
       </div>
     </div>
     <?php if (isset($errors)): ?>
-    <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
+    <span class="form__error form__error--bottom"><?=$errors['email'] ?></span>
     <?php endif; ?>
     <button type="submit" class="button">Зарегистрироваться</button>
     <a class="text-link" href="login.php">Уже есть аккаунт</a>

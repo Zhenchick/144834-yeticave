@@ -1,8 +1,16 @@
 <?php
-
 require 'functions.php';
 
 require 'data.php';
+
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    $is_auth = true;
+} else {
+    header("HTTP/1.1 403 Forbidden");
+    exit();
+    //http_response_code(403);
+}
 
 $errors = [];
 
@@ -96,8 +104,8 @@ $layout_content = renderTemplate(
         'categories' => $categories,
         'content' => $page_content,
         'title' => 'Добавление лота на аукцион',
-        'user_name' => $user_name,
-        'user_avatar' => $user_avatar,
+        'user_name' => $user['name'] ?? '',
+        'user_avatar' => $user['avatar'] ?? '',
         'is_auth' => $is_auth
     ]
 );

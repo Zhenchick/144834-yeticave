@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result_exist_email_query = mysqli_query($connect, $exist_email_query);
 
     if (mysqli_num_rows($result_exist_email_query) > 0) {
-        $errors[] = 'Пользователь с этим email уже зарегистрирован';
+        $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
     } else {
         $required = [
             'name', 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        if (filter_var($user['email'], FILTER_VALIDATE_EMAIL) === FALSE) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
             $errors['email'] = 'Введите кооректный e-mail';
         }
 

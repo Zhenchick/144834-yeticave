@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include_once "mysql_helper.php";
 
 /**
@@ -163,4 +165,41 @@ function currentPrice($lot, $bets = [])
 		$last_bet = $bets[0];
 		return $last_bet['price'];
 	}
+}
+
+
+function getUserByEmail($connect, $email)
+{
+	$email = mysqli_real_escape_string($connect, $email);
+
+    $exist_email_query = "
+        SELECT 
+            *
+        FROM 
+            `users`
+        WHERE 
+            `email` = '$email';
+    ";
+
+    $result_exist_email_query = mysqli_query($connect, $exist_email_query);
+
+    return $result_exist_email_query ? mysqli_fetch_array($result_exist_email_query, MYSQLI_ASSOC) : null;
+}
+
+function getUserById($connect, $id)
+{
+	$id = intval($id);
+
+    $exist_id_query = "
+        SELECT 
+            *
+        FROM 
+            `users`
+        WHERE 
+            `id` = $id;
+    ";
+
+    $result_exist_id_query = mysqli_query($connect, $exist_id_query);
+
+    return $result_exist_id_query ? mysqli_fetch_array($result_exist_id_query, MYSQLI_ASSOC) : null;
 }
